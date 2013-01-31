@@ -1,0 +1,17 @@
+#!/bin/sh
+cd $HOME/irc
+ii -s localhost -n rockwolf -f "rockwolf" &
+#ii -s irc.oftc.net -n rockwolf -f "rockwolf" &
+#ii -s irc.quakenet.org -n rockwolf -f "rockwolf" &
+#ii -s irc.chat.be -n rockwolf -f "rockwolf" &
+ii -s irc.freenode.net -n rockwolf -f "rockwolf" &
+
+sleep 5 
+echo "/j &bitlbee" > $HOME/irc/localhost/in
+echo "identify <mypass>" > $HOME/irc/localhost/\&bitlbee/in
+#echo "/j #ii" > $HOME/irc/irc.oftc.net/in
+#echo "/j #ra-chan" > $HOME/irc/irc.quakenet.org/in
+echo "NickServ identify <mypass>" > $HOME/irc/irc.freenode.net/in
+echo "/j #sqlalchemy" > $HOME/irc/irc.freenode.net/in
+
+
