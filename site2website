@@ -1,0 +1,45 @@
+#!/bin/sh
+USERNAME="<user>"
+PASSWORD="<pass>"
+SERVER="<server>"
+
+# local directory to pickup file
+HOME="/home/rockwolf"
+FILE="/tmp/today.txt"
+FILE2=$HOME"/tmp/cal2w.txt"
+FILE3=$HOME"/tmp/cal1m.html"
+FILE4=$HOME"/tmp/cal1y.html"
+FILE5=$HOME"/tmp/cal1m_extra.html"
+FILE6=$HOME"/tmp/extra.txt"
+
+# Generate files
+# today.html
+REMINDER=$HOME"/.reminders"
+REMINDEREXTRA=$HOME"/.reminders_extra"
+REM2HTML="/usr/local/sh/linux/rem2html"
+DATE=`date +"%Y-%m-%d" --date="-1 days ago"` 
+remind -m -b1 $REMINDER $DATE > $HOME/tmp/today.txt
+remind -m -b1 -s+2 $REMINDER $DATE > $HOME/tmp/cal2w.txt
+remind -m -b1 -p $REMINDER $DATE | $REM2HTML > $HOME/tmp/cal1m.html
+remind -m -b1 -p12 $REMINDER January `date +%Y` | $REM2HTML > $HOME/tmp/cal1y.html
+remind -m -b1 -p $REMINDEREXTRA $DATE | $REM2HTML > $HOME/tmp/cal1m_extra.html
+remind -m -b1 $REMINDEREXTRA $DATE > $HOME/tmp/extra.txt
+
+# remote server directory to upload file
+UPLOADDIR=""
+UPLOADDIR2=""
+
+# login to remote server
+echo "Logging in to webserver..."
+lftp $SERVER <<EOF
+user $USERNAME $PASSWORD
+cd $UPLOADDIR
+mput $FILE
+mput $FILE2
+mput $FILE3
+mput $FILE4
+mput $FILE5
+mput $FILE6
+quit
+EOF
+echo "Calendar files uploaded."
