@@ -16,7 +16,7 @@ FILE6=$HOME"/tmp/extra.txt"
 # today.html
 REMINDER=$HOME"/.reminders"
 REMINDEREXTRA=$HOME"/.reminders_extra"
-REM2HTML="/usr/local/sh/rem2html"
+REM2HTML="/usr/local/sh/linux/rem2html"
 DATE=`date +"%Y-%m-%d" --date="-1 days ago"` 
 remind -m -b1 $REMINDER $DATE > $HOME/tmp/today.txt
 remind -m -b1 -s+2 $REMINDER $DATE > $HOME/tmp/cal2w.txt
